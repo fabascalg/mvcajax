@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#boton").click(function () {
+            $.getJSON("/home/ListaPersonasJSON",function(datos){
+                for (var i=0;i<datos.length; i++){
+                    $("#mitabla").append("<tr><td>"+datos[i].nombre+"</td><td>"+datos[i].apellidos+"</td></tr>");
+                }
+                console.table(datos);
+            })
+
+        })
+    })
+</script>
+
+<table id="mitabla">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.ListaPersonas)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Apellidos</td>
+            </tr>
+            
+        }
+    </tbody>
+
+</table>
+<br>
+<input type="button" value="aceptar" id="boton" name="boton">
+

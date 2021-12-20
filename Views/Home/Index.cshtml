@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#boton").click(function () {
+            $.get("home/datos",function(texto){
+                $("#mitabla").append("<tr><td>"+texto+"</td></tr>");
+            })
+            /*$.getJSON("/home/ListaFacturasJSON",function(datos){
+                foreach (var f in datos){
+                    $("#mitabla").append("<tr><td>"+f.Numero+"</td><td>"+f.Concepto+"</td><td>"+f.Importe+"</td></tr>");
+                }
+                //console.table(datos);
+            })*/
+        })
+    })
+</script>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table id="mitabla">
+    <tr>
+        <th>
+            textos
+        </th>
+    </tr>
+
+    @foreach (var texto in ViewBag.textos)
+    {
+        <tr>
+            <td>
+                <div>@texto</div>
+            </td>
+        </tr>
+    }
+    <br>
+</table>
+<hr>
+<input type="button" id="boton" name="boton" value="aceptar">
+<br>
+<a href="/home/listafacturas">Lista de Facturas </a>
+<br>
+<a href="/home/listapersonas">lista de Personas</a>
