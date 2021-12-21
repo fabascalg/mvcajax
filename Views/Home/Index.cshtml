@@ -8,12 +8,6 @@
             $.get("home/datos",function(texto){
                 $("#mitabla").append("<tr><td>"+texto+"</td></tr>");
             })
-            /*$.getJSON("/home/ListaFacturasJSON",function(datos){
-                foreach (var f in datos){
-                    $("#mitabla").append("<tr><td>"+f.Numero+"</td><td>"+f.Concepto+"</td><td>"+f.Importe+"</td></tr>");
-                }
-                //console.table(datos);
-            })*/
         })
     })
 </script>
@@ -21,7 +15,7 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
+<h5>Trabajando con un array de forma local (lado cliente)</h5>
 <table id="mitabla">
     <tr>
         <th>
@@ -40,8 +34,4 @@
     <br>
 </table>
 <hr>
-<input type="button" id="boton" name="boton" value="aceptar">
-<br>
-<a href="/home/listafacturas">Lista de Facturas </a>
-<br>
-<a href="/home/listapersonas">lista de Personas</a>
+<input type="button" id="boton" name="boton" value="agregar item localmente...">

@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Lista de Clientes";
+}
+
+<h5>La primera tabla viene con la carga de la página en ViewBag</h5>
+<table id="mitabla">
+    <thead>
+    <tr>
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (Cliente c in ViewBag.lista)
+        {
+            <tr>
+                <td>@c.DNI</td>
+                <td>@c.Nombre</td>
+                <td>@c.Apellidos</td>
+            </tr>
+            
+        }
+    </tbody>
+
+</table>
+<hr>

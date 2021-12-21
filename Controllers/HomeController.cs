@@ -40,10 +40,15 @@ public class HomeController : Controller
     }
 
 
-    public ActionResult ListaFacturasJSON(){
+    public ActionResult ListaFacturasJSON(string concepto){
         FacturaRepositiorio repo = new FacturaRepositiorio();
-        List<Factura> lista = repo.BuscarTodas();
-
+        List<Factura> lista;
+        if (concepto!=null){
+            lista = repo.BuscarTodasFiltroConcepto(concepto);
+        } else
+        {
+            lista = repo.BuscarTodas();
+        }
         return Json(lista);
     }
 

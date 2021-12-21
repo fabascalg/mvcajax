@@ -1,7 +1,7 @@
-table, th, td {
+#mitabla, #mitabla th, #mitabla td {
     border-collapse: collapse;
     border: 1px, solid, gray;    
 }
-th, td {
+#mitabla th, #mitabla td {
     padding: 5px;
 }

@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Lista de Facturas";
 }
 
 <script>
@@ -11,11 +11,19 @@
                 }
                 console.table(datos);
             })
-
+        })
+        $("#concepto").keyup(function () {
+            $.getJSON("/home/ListaFacturasJSON?concepto="+$("#concepto").val(),function(datos){
+                $("#mitabla2").empty();
+                for (var i=0;i<datos.length; i++){
+                    $("#mitabla2").append("<tr><td>"+datos[i].numero+"</td><td>"+datos[i].concepto+"</td><td>"+datos[i].importe+"</td></tr>");
+                }
+                //console.table(datos);
+            })
         })
     })
 </script>
-
+<h5>La primera tabla viene con la carga de la página en ViewBag, y el filtro es una petición AJAX JSON</h5>
 <table id="mitabla">
     <thead>
     <tr>
@@ -37,6 +45,11 @@
     </tbody>
 
 </table>
-<br>
-<input type="button" value="aceptar" id="boton" name="boton">
+<hr>
+<label for="filtrar">filtrar concepto: </label><input type="text" name="concepto" id="concepto">
+<table id="mitabla2">
+</table>
+<!--<br>
+<input type="button" value="agregar a la primera tabla" id="boton" name="boton">
+-->
 

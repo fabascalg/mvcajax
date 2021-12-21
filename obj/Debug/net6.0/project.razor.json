@@ -16323,6 +16323,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Cliente\\ListaClientes.cshtml",
+      "TargetPath": "Views\\Cliente\\ListaClientes.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
