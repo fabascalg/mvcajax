@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Formulario Cliente";
+    Cliente cli = ViewBag.c;
+}
+<h5>Formulario Cliente</h5>
+<form action="/cliente/modificarcliente">
+    <span style="display: none;">@cli.Id</span>
+    <p><label for="dni">DNI: &nbsp;</label><input type="text" name="dni" id="dni" value="@cli.DNI"></p>
+    <p><label for="nombre">Nombre: &nbsp;</label><input type="text" name="nombre" id="nombre" value="@cli.Nombre"></p>
+    <p><label for="apellidos">Apellidos: &nbsp;</label><input type="text" name="apellidos" id="apellidos" value="@cli.Apellidos"></p>
+    <p><input type="submit" value="enviar"></p>
+</form>

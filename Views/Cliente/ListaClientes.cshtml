@@ -8,15 +8,15 @@
     $(document).ready(function () {
         $(".borrar").click(function () {
             $b = $(this);
-            var n = $b.attri("id");
+            var n = parseInt($b.attr("id"));
             //n = n.substr(0, n.length - 3);
-            alert(n);
+            $(location).attr("href","/cliente/remover?id="+n);
         })
         $(".editar").click(function () {
             $b = $(this);
-            var n = $b.attri("id");
+            var n = parseInt($b.attr("id"));
             //n = n.substr(0, n.length - 3);
-            alert(n);
+            $(location).attr("href","/cliente/formclientee?id="+n);
         })
     })
 </script>

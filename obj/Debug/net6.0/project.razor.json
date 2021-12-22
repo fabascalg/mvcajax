@@ -16318,6 +16318,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Cliente\\formClienteE.cshtml",
+      "TargetPath": "Views\\Cliente\\formClienteE.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"

@@ -53,4 +53,27 @@ public class ClienteRepositorio
         return n;
     } 
 
+    public Cliente Editar(int id)
+    {
+        string query = "SELECT * FROM `clientes` WHERE id="+id.ToString();
+
+        MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+        MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+        databaseConnection.Open();
+        MySqlDataReader reader;
+        reader = commandDatabase.ExecuteReader();
+        Cliente cliente = new Cliente();
+        if (reader.HasRows)
+        {
+            while (reader.Read())
+            {
+                cliente = new Cliente(reader.GetInt32("Id"), reader.GetString("DNI"), reader.GetString("nombre"), reader.GetString("apellidos"));
+            }
+        }
+        reader.Close();
+        databaseConnection.Close();
+        return cliente;
+    } 
+
+
 }
