@@ -1,30 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\www\\frontend\\mvcajax\\mvcajax.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\mvcajax.csproj": {}
   },
   "projects": {
-    "D:\\www\\frontend\\mvcajax\\mvcajax.csproj": {
+    "C:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\mvcajax.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\www\\frontend\\mvcajax\\mvcajax.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\mvcajax.csproj",
         "projectName": "mvcajax",
-        "projectPath": "D:\\www\\frontend\\mvcajax\\mvcajax.csproj",
-        "packagesPath": "C:\\Users\\Fernando\\.nuget\\packages\\",
-        "outputPath": "D:\\www\\frontend\\mvcajax\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\mvcajax.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Fernando\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,6 +37,20 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.27, )"
+            },
+            "MySqlClient": {
+              "target": "Package",
+              "version": "[5.4.2, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -60,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

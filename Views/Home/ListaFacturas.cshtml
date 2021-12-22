@@ -13,6 +13,16 @@
             })
 
         })
+        $("#filtroconcepto").keyup(function () {
+            $.getJSON("/home/ListaFacturasJSON?concepto="+$(this).val(),function(datos){
+                console.log($(this).val);
+                $("#mitabla2").empty();
+                for (let i=0;i<datos.length; i++){
+                    $("#mitabla2").append("<tr><td>"+datos[i].numero+"</td><td>"+datos[i].concepto+"</td><td>"+datos[i].importe+"</td></tr>");
+                }
+            })
+
+        })
     })
 </script>
 
@@ -37,6 +47,12 @@
     </tbody>
 
 </table>
+<hr>
+filtar concepto<input type="text" id="filtroconcepto"/>
+<table id="mitabla2">
+
+</table>
 <br>
 <input type="button" value="aceptar" id="boton" name="boton">
+
 

@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#boton").click(function () {
+            $.getJSON("/home/ListaClientesJSON",function(datos){
+                for (var i=0;i<datos.length; i++){
+                    $("#mitabla").append("<tr><td>"+datos[i].DNI+"</td><td>"+datos[i].nombre+"</td><td>"+datos[i].apellidos+"</td></tr>");
+                }
+            })
+
+        })
+        $("#filtronombre").keyup(function () {
+            $.getJSON("/home/ListaClientesJSON?nombre="+$(this).val(),function(datos){
+                console.log($(this).val);
+                $("#mitabla2").empty();
+                for (let i=0;i<datos.length; i++){
+                    $("#mitabla2").append("<tr><td>"+datos[i].dni+"</td><td>"+datos[i].nombre+"</td><td>"+datos[i].apellidos+"</td></tr>");
+                }
+            })
+
+        })
+    })
+</script>
+
+<table id="mitabla">
+    <thead>
+    <tr>
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.listaclientes)
+        {
+            <tr>
+                <td>@item.DNI</td>
+                <td>@item.Nombre</td>
+                <td>@item.Apellidos</td>
+                 <td><a href="/home/BorrarCliente?DNI=@item.DNI">Borrar</a></td>
+            </tr>
+            
+        }
+    </tbody>
+
+</table>
+<hr>
+filtar nombre <input type="text" id="filtronombre"/>
+<table id="mitabla2">
+
+</table>
+<br>
+<input type="button" value="aceptar" id="boton" name="boton">
+
+

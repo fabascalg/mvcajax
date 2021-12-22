@@ -8,45 +8,53 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = mvcajax
 build_property.RootNamespace = mvcajax
-build_property.ProjectDir = d:\www\frontend\mvcajax\
+build_property.ProjectDir = C:\Users\Admin\Desktop\mvcAjax\mvcajax\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = d:\www\frontend\mvcajax
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Desktop\mvcAjax\mvcajax
 build_property._RazorSourceGeneratorDebug = 
 
-[d:/www/frontend/mvcajax/Views/Home/Index.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ClienteFormulario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDbGllbnRlRm9ybXVsYXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Home/ListaFacturas.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ListaClientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0YUNsaWVudGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ListaFacturas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0YUZhY3R1cmFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Home/ListaPersonas.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ListaPersonas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0YVBlcnNvbmFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Home/Privacy.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Shared/Error.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/_ViewImports.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/_ViewStart.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/www/frontend/mvcajax/Views/Shared/_Layout.cshtml]
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-tx76onp39l
