@@ -67,4 +67,15 @@ public class ClienteRepository
         commandDatabase.CommandText = query;
         commandDatabase.ExecuteNonQuery();
     }
+    public void Editar(Cliente cliente)
+    {
+        // Tu consulta en SQL
+        string query = "Update Clientes set Nombre = '" + cliente.Nombre + "', Apellido ='" + cliente.Apellidos + "' where DNI ='" + cliente.DNI + "'; ";
+
+        MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+        MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+        databaseConnection.Open();
+        commandDatabase.CommandText = query;
+        commandDatabase.ExecuteNonQuery();
+    }
 }

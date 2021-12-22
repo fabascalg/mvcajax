@@ -95,13 +95,24 @@ public class HomeController : Controller
     {
         return View();
     }
-     public IActionResult BorrarCliente(Cliente  cliente)
-        {
-            ClienteRepository repo = new ClienteRepository();
-            repo.BorrarCliente(cliente);
-           // ViewBag.ListaClientes = repo.BuscarTodos();
-            return RedirectToAction("ListaClientes", "Home");
-        }
+    public IActionResult ClienteEditar()
+    {
+        return View();
+    }
+    public IActionResult BorrarCliente(Cliente cliente)
+    {
+        ClienteRepository repo = new ClienteRepository();
+        repo.BorrarCliente(cliente);
+        // ViewBag.ListaClientes = repo.BuscarTodos();
+        return RedirectToAction("ListaClientes", "Home");
+    }
+    public IActionResult Editar(Cliente cliente)
+    {
+        ClienteRepository repo = new ClienteRepository();
+        repo.Editar(cliente);
+        // ViewBag.ListaClientes = repo.BuscarTodos();
+        return RedirectToAction("ListaClientes", "Home");
+    }
 
     public ActionResult Datos()
     {

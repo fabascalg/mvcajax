@@ -16298,6 +16298,11 @@
   "RootNamespace": "mvcajax",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\Views\\Home\\ClienteEditar.cshtml",
+      "TargetPath": "Views\\Home\\ClienteEditar.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Admin\\Desktop\\mvcAjax\\mvcajax\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"

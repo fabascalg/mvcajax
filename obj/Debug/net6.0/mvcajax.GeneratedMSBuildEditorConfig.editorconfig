@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Admin\Desktop\mvcAjax\mvcajax
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ClienteEditar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDbGllbnRlRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Desktop/mvcAjax/mvcajax/Views/Home/ClienteFormulario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDbGllbnRlRm9ybXVsYXJpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
