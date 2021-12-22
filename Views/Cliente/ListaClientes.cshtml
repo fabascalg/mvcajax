@@ -10,13 +10,13 @@
             $b = $(this);
             var n = parseInt($b.attr("id"));
             //n = n.substr(0, n.length - 3);
-            $(location).attr("href","/cliente/remover?id="+n);
+            $(location).attr("href","/cliente/remover/"+n);
         })
         $(".editar").click(function () {
             $b = $(this);
             var n = parseInt($b.attr("id"));
             //n = n.substr(0, n.length - 3);
-            $(location).attr("href","/cliente/formclientee?id="+n);
+            $(location).attr("href","/cliente/formclientee/"+n);
         })
     })
 </script>

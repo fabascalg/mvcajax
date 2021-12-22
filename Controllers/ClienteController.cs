@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using mvcajax.Models;
+using MySql.Data.MySqlClient;
 
 namespace mvcajax.Controllers;
 
@@ -39,6 +40,14 @@ public class ClienteController : Controller
 
     }
 
+    public IActionResult modificarCliente(Cliente c)
+    {
+        ClienteRepositorio cr = new ClienteRepositorio();
+        int n = cr.Grabar(c);
+        ViewBag.n = n;
+        return RedirectToAction("ListaClientes", "Cliente");
+    }
+
     public IActionResult remover(Cliente c)
     {
         ClienteRepositorio cr = new ClienteRepositorio();
@@ -46,11 +55,14 @@ public class ClienteController : Controller
         return RedirectToAction("ListaClientes", "Cliente");
     }
 
-    public IActionResult formClienteE(int n)
+    public IActionResult formClienteE(Cliente c)
     {
+        Cliente cli = new Cliente();
         ClienteRepositorio cr = new ClienteRepositorio();
-        Cliente cli = cr.Editar(n);
-        ViewBag.c = cli;
+        cli = cr.Editar(c);
+        ViewBag.cli = cli;
         return View();
     }
+
+
 }

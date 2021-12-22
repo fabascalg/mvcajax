@@ -29,34 +29,32 @@ public class ClienteRepositorio
 
     public int Insertar(Cliente c)
     {
-        string query = "INSERT INTO `clientes` (dni,nombre,apellidos) VALUES ('"+c.DNI+"','"+c.Nombre+"','"+c.Apellidos+"')";
+        string query = "INSERT INTO `clientes` (dni,nombre,apellidos) VALUES ('" + c.DNI + "','" + c.Nombre + "','" + c.Apellidos + "')";
 
         MySqlConnection databaseConnection = new MySqlConnection(connectionString);
         MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
         databaseConnection.Open();
-        commandDatabase.CommandText=query;
+        commandDatabase.CommandText = query;
         int n = commandDatabase.ExecuteNonQuery();
         databaseConnection.Close();
         return n;
-    }    
+    }
 
     public int Borrar(int id)
     {
-        string query = "DELETE FROM `clientes` WHERE id="+id.ToString();
-
+        string query = "DELETE FROM `clientes` WHERE id=" + id.ToString();
         MySqlConnection databaseConnection = new MySqlConnection(connectionString);
         MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
         databaseConnection.Open();
-        commandDatabase.CommandText=query;
+        commandDatabase.CommandText = query;
         int n = commandDatabase.ExecuteNonQuery();
         databaseConnection.Close();
         return n;
-    } 
+    }
 
-    public Cliente Editar(int id)
+    public Cliente Editar(Cliente c)
     {
-        string query = "SELECT * FROM `clientes` WHERE id="+id.ToString();
-
+        string query = "SELECT * FROM `clientes` WHERE id=" + c.Id.ToString();
         MySqlConnection databaseConnection = new MySqlConnection(connectionString);
         MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
         databaseConnection.Open();
@@ -65,15 +63,24 @@ public class ClienteRepositorio
         Cliente cliente = new Cliente();
         if (reader.HasRows)
         {
-            while (reader.Read())
-            {
-                cliente = new Cliente(reader.GetInt32("Id"), reader.GetString("DNI"), reader.GetString("nombre"), reader.GetString("apellidos"));
-            }
+            reader.Read();
+            cliente = new Cliente(reader.GetInt32("id"), reader.GetString("dni"), reader.GetString("nombre"), reader.GetString("apellidos"));
         }
         reader.Close();
         databaseConnection.Close();
         return cliente;
-    } 
+    }
+
+    public int Grabar(Cliente c){
+        string query = "UPDATE `clientes` SET `dni`='" + c.DNI + "',`nombre`='" + c.Nombre + "',`apellidos`='" + c.Apellidos + "' WHERE `id` = " + c.Id + ";";
+        MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+        MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+        databaseConnection.Open();
+        commandDatabase.CommandText = query;
+        int n = commandDatabase.ExecuteNonQuery();
+        databaseConnection.Close();
+        return n;
+    }
 
 
 }
