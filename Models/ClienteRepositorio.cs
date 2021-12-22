@@ -7,7 +7,7 @@ public class ClienteRepositorio
     public List<Cliente> Consulta()
     {
         List<Cliente> lista = new List<Cliente>();
-        string query = "SELECT * FROM dbo.clientes";
+        string query = "SELECT id, dni,nombre,apellidos FROM clientes ORDER BY nombre,apellidos;";
 
         MySqlConnection databaseConnection = new MySqlConnection(connectionString);
         MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
@@ -18,7 +18,7 @@ public class ClienteRepositorio
         {
             while (reader.Read())
             {
-                Cliente cliente = new Cliente(reader.GetString("DNI"), reader.GetString("nombre"), reader.GetString("apellidos"));
+                Cliente cliente = new Cliente(reader.GetInt32("Id"), reader.GetString("DNI"), reader.GetString("nombre"), reader.GetString("apellidos"));
                 lista.Add(cliente);
             }
         }
@@ -26,5 +26,31 @@ public class ClienteRepositorio
         databaseConnection.Close();
         return lista;
     }
+
+    public int Insertar(Cliente c)
+    {
+        string query = "INSERT INTO `clientes` (dni,nombre,apellidos) VALUES ('"+c.DNI+"','"+c.Nombre+"','"+c.Apellidos+"')";
+
+        MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+        MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+        databaseConnection.Open();
+        commandDatabase.CommandText=query;
+        int n = commandDatabase.ExecuteNonQuery();
+        databaseConnection.Close();
+        return n;
+    }    
+
+    public int Borrar(int id)
+    {
+        string query = "DELETE FROM `clientes` WHERE id="+id.ToString();
+
+        MySqlConnection databaseConnection = new MySqlConnection(connectionString);
+        MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
+        databaseConnection.Open();
+        commandDatabase.CommandText=query;
+        int n = commandDatabase.ExecuteNonQuery();
+        databaseConnection.Close();
+        return n;
+    } 
 
 }

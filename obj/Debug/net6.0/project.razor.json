@@ -16346,6 +16346,11 @@
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Cliente\\formCliente.cshtml",
+      "TargetPath": "Views\\Cliente\\formCliente.cshtml",
+      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"

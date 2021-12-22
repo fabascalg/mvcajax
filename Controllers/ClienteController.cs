@@ -18,4 +18,20 @@ public class ClienteController : Controller
         return View();
     }
 
+    public IActionResult formCliente(){
+        return View();
+    }    
+
+    public IActionResult agregarCliente(Cliente c){
+
+        ClienteRepositorio cr = new ClienteRepositorio();
+        int n = cr.Insertar(c);
+        ViewBag.n = n;
+        List<Cliente> lista = new List<Cliente>();
+        lista = cr.Consulta();
+        ViewBag.lista = lista;
+        return View("ListaClientes");
+
+    }
+
 }

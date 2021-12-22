@@ -1,27 +1,56 @@
 @{
     ViewData["Title"] = "Lista de Clientes";
+    List<Cliente> lista = new List<Cliente>();
+    lista = ViewBag.lista;
+    string msg = "" + ViewBag.n;
 }
-
+<script>
+    $(document).ready(function () {
+        $(".borrar").click(function () {
+            $b = $(this);
+            var n = $b.attri("id");
+            //n = n.substr(0, n.length - 3);
+            alert(n);
+        })
+        $(".editar").click(function () {
+            $b = $(this);
+            var n = $b.attri("id");
+            //n = n.substr(0, n.length - 3);
+            alert(n);
+        })
+    })
+</script>
 <h5>La primera tabla viene con la carga de la página en ViewBag</h5>
 <table id="mitabla">
     <thead>
-    <tr>
-        <th>DNI</th>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
     </thead>
     <tbody>
-        @foreach (Cliente c in ViewBag.lista)
+        @for (int i = 0; i < lista.Count(); i++)
         {
+
             <tr>
-                <td>@c.DNI</td>
-                <td>@c.Nombre</td>
-                <td>@c.Apellidos</td>
+                <td>@lista[i].Id</td>
+                <td>@lista[i].DNI</td>
+                <td>@lista[i].Nombre</td>
+                <td>@lista[i].Apellidos</td>
+                <td><input type="button" class="editar" id="@lista[i].Id e" value="editar"></td>
+                <td><input type="button" class="borrar" id="@lista[i].Id b" value="borrar"></td>
             </tr>
-            
         }
     </tbody>
 
 </table>
 <hr>
+<ul>
+    <li><a href="/Cliente/formCliente">agregar cliente</a></li>
+</ul>
+<hr>
+<p>@msg</p>

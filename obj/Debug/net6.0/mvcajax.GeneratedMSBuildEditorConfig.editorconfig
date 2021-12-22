@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\www\frontend\mvcajax
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/www/frontend/mvcajax/Views/Cliente/formCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxmb3JtQ2xpZW50ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/www/frontend/mvcajax/Views/Cliente/ListaClientes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxMaXN0YUNsaWVudGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
