@@ -15,14 +15,14 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<h5>Trabajando con un array de forma local (lado cliente)</h5>
+<p>Trabajando con un <strong>array</strong>, repositorio en memoria de la app, que se carga muestra, después con Ajax, añadimos un dato a la tabla, creado y traído del modelo y agregado a la tabla sin más... </p>
 <table id="mitabla">
     <tr>
         <th>
             textos
         </th>
     </tr>
-
+    <!-- este código crea las filas con los datos recibidos en VieWag (List de n string)-->
     @foreach (var texto in ViewBag.textos)
     {
         <tr>

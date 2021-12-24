@@ -7,8 +7,7 @@ public class ClienteRepositorio
     public List<Cliente> Consulta()
     {
         List<Cliente> lista = new List<Cliente>();
-        string query = "SELECT id, dni,nombre,apellidos FROM clientes ORDER BY nombre,apellidos;";
-
+        string query = "SELECT id,dni,nombre,apellidos FROM clientes ORDER BY nombre,apellidos;";
         MySqlConnection databaseConnection = new MySqlConnection(connectionString);
         MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
         databaseConnection.Open();

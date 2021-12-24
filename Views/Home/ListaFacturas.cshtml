@@ -4,52 +4,127 @@
 
 <script>
     $(document).ready(function () {
-        $("#boton").click(function () {
-            $.getJSON("/home/ListaFacturasJSON",function(datos){
-                for (var i=0;i<datos.length; i++){
-                    $("#mitabla").append("<tr><td>"+datos[i].numero+"</td><td>"+datos[i].concepto+"</td><td>"+datos[i].importe+"</td></tr>");
+        $("#formulario").fadeOut();
+        $("#insertar").click(function () {
+            $("#listado").fadeOut();
+            $("#formulario").fadeIn();
+        })
+        buscarTodos();
+        $("#concepto").keyup(function () {
+            $.getJSON("/home/ListaFacturasJSON?concepto=" + $("#concepto").val(), function (datos) {
+                $("#mitabla2").empty();
+                for (var i = 0; i < datos.length; i++) {
+                    $("#mitabla2").append("<tr><td>" + datos[i].numero + "</td><td>" + datos[i].concepto + "</td><td>" + datos[i].importe + "</td></tr>");
                 }
-                console.table(datos);
             })
         })
-        $("#concepto").keyup(function () {
-            $.getJSON("/home/ListaFacturasJSON?concepto="+$("#concepto").val(),function(datos){
-                $("#mitabla2").empty();
-                for (var i=0;i<datos.length; i++){
-                    $("#mitabla2").append("<tr><td>"+datos[i].numero+"</td><td>"+datos[i].concepto+"</td><td>"+datos[i].importe+"</td></tr>");
+        $("#cancelar").click(function () {
+            $("#listado").fadeIn();
+            $("#formulario").fadeOut();
+        })
+        $("#guardar").click(function () {
+            var factura = {};
+            factura.numero = $("#numero").val();
+            factura.concepto = $("#conceptof").val();
+            factura.importe = $("#importe").val();
+            $.ajax({
+                url: "/home/insertarjson",
+                type: "POST",
+                data: JSON.stringify(factura),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $("#listado").show();
+                    $("#formularioinsertar").hide();
+                    $("#mitabla").empty();
+                    buscarTodos();
+                    $("#formulario").fadeOut();                    
                 }
-                //console.table(datos);
-            })
+            });
+        })
+        $("#borrar").click( function() {
+
+                $b = $(this);
+                var n = parseInt($b.attr("id"));
+                //n = n.substr(0, n.length - 3);
+                $(location).attr("href", "/cliente/remover/" + n);            
+            $.ajax({
+                url: "/home/borrarJSON",
+                type: "POST",
+                data: JSON.stringify(factura),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $("#mitabla").empty();
+                    buscarTodos();
+                } 
+            {)       
         })
     })
+    function buscarTodos(){
+        $.getJSON("/home/ListaFacturasJSON", function (datos) {
+            for (var i = 0; i < datos.length; i++) {
+                $("#mitabla").append(`<tr>
+                                        <td>${datos[i].numero}</td>
+                                        <td>${datos[i].concepto}</td>
+                                        <td>${datos[i].importe}</td>
+                                        <td><input type="button" class="editar" value="editar" id="${datos[i].numero} e"></td>
+                                        <td><input type="button" class="borrar" value="borrar" id="${datos[i].numero} b"></td>
+                                     </tr>`);
+
+            }
+        })
+    }
+
 </script>
-<h5>La primera tabla viene con la carga de la página en ViewBag, y el filtro es una petición AJAX JSON</h5>
-<table id="mitabla">
-    <thead>
-    <tr>
-        <th>Numero</th>
-        <th>Concepto</th>
-        <th>Importe</th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewBag.listafacturas)
-        {
+<div id="listado">
+    <h5>La tabla viene en Ajax JSON</h5>
+    <table id="mitabla">
+        <thead>
             <tr>
-                <td>@item.Numero</td>
-                <td>@item.Concepto</td>
-                <td>@item.Importe</td>
+                <th>Numero</th>
+                <th>Concepto</th>
+                <th>Importe</th>
             </tr>
-            
-        }
-    </tbody>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <hr>
+    <input type="button" value="insertar" id="insertar">
+    <hr>
+    <h5>La tabla filtrada viene AJAX JSON</h5>
+    <label for="filtrar">filtrar concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="concepto"
+        id="concepto">
 
-</table>
-<hr>
-<label for="filtrar">filtrar concepto: </label><input type="text" name="concepto" id="concepto">
-<table id="mitabla2">
-</table>
-<!--<br>
-<input type="button" value="agregar a la primera tabla" id="boton" name="boton">
--->
-
+    <table id="mitabla2">
+    </table>
+    <hr>
+</div>
+<div id="formulario">
+    <h5>Formulario Factura</h5>
+    <form>
+        <p>
+            <label for="Numero">Número: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="numero" name="numero" placeholder="aquí el número">
+        </p>
+        <p>
+            <label for="Concepto">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="conceptof" name="conceptof" placeholder="aquí el concepto">
+        </p>
+        <p>
+            <label for="Importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="importe" name="importe" placeholder="aquí el importe">
+        </p>
+        <p>
+            <input type="button" value="guardar" id="guardar">
+            <input type="button" value="cancelar" id="cancelar">
+        </p>
+    </form>
+</div>

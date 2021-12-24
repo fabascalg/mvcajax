@@ -39,7 +39,24 @@ public class HomeController : Controller
         return View();
     }
 
+[HttpPost]
+        public IActionResult InsertarJSON( [FromBody] Factura factura)
+        {
+            //Console.WriteLine(factura.Numero);
+            //Console.WriteLine(factura.Concepto);
+            //Console.WriteLine(factura.Importe);
+            FacturaRepositiorio repo = new FacturaRepositiorio();
+            repo.InsertarFactra(factura);
+            return Json("Success");
+        }
 
+[HttpPost]
+        public IActionResult borrarJSON( [FromBody] Factura factura)
+        {
+            FacturaRepositiorio repo = new FacturaRepositiorio();
+            repo.borrarFactura(factura);
+            return Json("Success");
+        }
     public ActionResult ListaFacturasJSON(string concepto){
         FacturaRepositiorio repo = new FacturaRepositiorio();
         List<Factura> lista;

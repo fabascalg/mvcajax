@@ -64,5 +64,13 @@ public class ClienteController : Controller
         return View();
     }
 
+    public ActionResult ListaClientesJSON()
+    {
+        ClienteRepositorio repo = new ClienteRepositorio();
+        List<Cliente> lista;
+        lista = repo.Consulta();
+        return Json(lista);        
+    }
+
 
 }

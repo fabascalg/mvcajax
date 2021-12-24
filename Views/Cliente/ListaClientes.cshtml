@@ -6,18 +6,34 @@
 }
 <script>
     $(document).ready(function () {
-        $(".borrar").click(function () {
-            $b = $(this);
-            var n = parseInt($b.attr("id"));
-            //n = n.substr(0, n.length - 3);
-            $(location).attr("href","/cliente/remover/"+n);
+        $.getJSON("/cliente/ListaClientesJSON", function (datos) {
+            for (var i = 0; i < datos.length; i++) {
+                $("#mitabla").append(`<tr>
+                                        <td>${datos[i].id}</td>
+                                        <td>${datos[i].dni}</td>
+                                        <td>${datos[i].nombre}</td>
+                                        <td>${datos[i].apellidos}</td>
+                                        <td><input type="button" class="editar" id="${datos[i].id} e" value="editar" /></td>
+                                        <td><input type="button" class="borrar" id="${datos[i].id} b" value="borrar"></td>
+                                      </tr>`);
+            }
+            console.table(datos);
+            implementarEventos();
         })
-        $(".editar").click(function () {
-            $b = $(this);
-            var n = parseInt($b.attr("id"));
-            //n = n.substr(0, n.length - 3);
-            $(location).attr("href","/cliente/formclientee/"+n);
-        })
+        function implementarEventos() {
+            $(".borrar").click(function () {
+                $b = $(this);
+                var n = parseInt($b.attr("id"));
+                //n = n.substr(0, n.length - 3);
+                $(location).attr("href", "/cliente/remover/" + n);
+            })
+            $(".editar").click(function () {
+                $b = $(this);
+                var n = parseInt($b.attr("id"));
+                //n = n.substr(0, n.length - 3);
+                $(location).attr("href", "/cliente/formclientee/" + n);
+            })
+        }
     })
 </script>
 <h5>La primera tabla viene con la carga de la página en ViewBag</h5>
@@ -33,18 +49,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < lista.Count(); i++)
-        {
 
-            <tr>
-                <td>@lista[i].Id</td>
-                <td>@lista[i].DNI</td>
-                <td>@lista[i].Nombre</td>
-                <td>@lista[i].Apellidos</td>
-                <td><input type="button" class="editar" id="@lista[i].Id e" value="editar"></td>
-                <td><input type="button" class="borrar" id="@lista[i].Id b" value="borrar"></td>
-            </tr>
-        }
     </tbody>
 
 </table>
