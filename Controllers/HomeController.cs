@@ -7,11 +7,12 @@ namespace mvcajax.Controllers;
 public class HomeController : Controller
 {
     static List<string> textos = new List<string>();
-    static HomeController(){
+    static HomeController()
+    {
         textos.Add("hola");
         textos.Add("que");
         textos.Add("tal");
-        textos.Add("estas");        
+        textos.Add("estas");
     }
 
     private readonly ILogger<HomeController> _logger;
@@ -27,54 +28,67 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult ListaFacturas(){
-        FacturaRepositiorio repo = new FacturaRepositiorio();
-        ViewBag.listafacturas = repo.BuscarTodas();
+    public IActionResult ListaFacturas()
+    {
+        //FacturaRepositorio repo = new FacturaRepositorio();
+        //ViewBag.listafacturas = repo.BuscarTodas();
         return View();
     }
 
-    public IActionResult ListaPersonas(){
+    public IActionResult ListaPersonas()
+    {
         PersonaRepositiorio repo = new PersonaRepositiorio();
         ViewBag.listapersonas = repo.BuscarTodas();
         return View();
     }
 
-[HttpPost]
-        public IActionResult InsertarJSON( [FromBody] Factura factura)
-        {
-            //Console.WriteLine(factura.Numero);
-            //Console.WriteLine(factura.Concepto);
-            //Console.WriteLine(factura.Importe);
-            FacturaRepositiorio repo = new FacturaRepositiorio();
-            repo.InsertarFactra(factura);
-            return Json("Success");
-        }
+    [HttpPost]
+    public IActionResult InsertarJSON([FromBody] Factura factura)
+    {
+        FacturaRepositorio repo = new FacturaRepositorio();
+        repo.InsertarFactra(factura);
+        return Json("Success");
+    }
 
+    [HttpPost]
+    public IActionResult borrarJSON([FromBody] Factura factura)
+    {
+        FacturaRepositorio repo = new FacturaRepositorio();
+        repo.borrarFactura(factura);
+        return Json("Success");
+    }
 [HttpPost]
-        public IActionResult borrarJSON( [FromBody] Factura factura)
-        {
-            FacturaRepositiorio repo = new FacturaRepositiorio();
-            repo.borrarFactura(factura);
-            return Json("Success");
-        }
-    public ActionResult ListaFacturasJSON(string concepto){
-        FacturaRepositiorio repo = new FacturaRepositiorio();
+    public ActionResult cargarRegistroJSON([FromBody] Factura x)
+    {
+        
+        FacturaRepositorio repo = new FacturaRepositorio();
+        Factura lista = repo.BuscarTodasFiltroNumero(x.Numero);
+        //Console.WriteLine(lista.Numero.ToString()+"\t"+lista.Concepto+"\t"+lista.Importe.ToString());
+        return Json(lista);        
+    }
+    public ActionResult ListaFacturasJSON(string concepto)
+    {
+        FacturaRepositorio repo = new FacturaRepositorio();
         List<Factura> lista;
-        if (concepto!=null){
+        if (concepto != null)
+        {
             lista = repo.BuscarTodasFiltroConcepto(concepto);
-        } else
+        }
+        else
         {
             lista = repo.BuscarTodas();
         }
         return Json(lista);
     }
 
-    public ActionResult ListaPersonasJSON(){
+    public ActionResult ListaPersonasJSON()
+    {
         PersonaRepositiorio repo = new PersonaRepositiorio();
         List<Persona> lista = repo.BuscarTodas();
         return Json(lista);
-    }    
-    public ActionResult Datos(){
+    }
+    public ActionResult Datos()
+    {
         return Content("tu del servidor");
     }
 
