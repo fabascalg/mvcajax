@@ -4,12 +4,18 @@
 
 <script>
     $(document).ready(function () {
+
+        $("#listado").fadeIn();
         $("#formulario").fadeOut();
+        $("#formulario2").fadeOut();
+
         $("#insertar").click(function () {
             $("#listado").fadeOut();
             $("#formulario").fadeIn();
         })
+
         buscarTodos();
+
         $("#concepto").keyup(function () {
             $.getJSON("/home/ListaFacturasJSON?concepto=" + $("#concepto").val(), function (datos) {
                 $("#mitabla2").empty();
@@ -18,10 +24,12 @@
                 }
             })
         })
+
         $("#cancelar").click(function () {
             $("#listado").fadeIn();
             $("#formulario").fadeOut();
         })
+
         $("#guardar").click(function () {
             var factura = {};
             factura.numero = $("#numero").val();
@@ -37,20 +45,19 @@
                     alert(response.responseText);
                 },
                 success: function (response) {
-                    $("#listado").show();
-                    $("#formularioinsertar").hide();
+                    $("#listado").fadeIn();
+                    $("#formulario").fadeOut();
                     $("#mitabla").empty();
                     buscarTodos();
-                    $("#formulario").fadeOut();                    
                 }
-            });
+            })
         })
-        $("#borrar").click( function() {
 
-                $b = $(this);
-                var n = parseInt($b.attr("id"));
-                //n = n.substr(0, n.length - 3);
-                $(location).attr("href", "/cliente/remover/" + n);            
+        $(document).on('click', '.borrar', function () {
+            $b = $(this);
+            var n = parseInt($b.attr("id"));
+            var factura = {};
+            factura.numero = n;
             $.ajax({
                 url: "/home/borrarJSON",
                 type: "POST",
@@ -63,11 +70,52 @@
                 success: function (response) {
                     $("#mitabla").empty();
                     buscarTodos();
-                } 
-            {)       
+                }
+            })
+        })
+
+        $(document).on('click', '.editar', function () {
+            $b = $(this);
+            var n = parseInt($b.attr("id"));
+            factura = {};
+            factura.numero = n;
+            /*
+            $.getJSON("/home/cargarRegistroJSON", function (dato) {
+                if (dato.numero == 0) {
+                    console.dir(dato);
+                } else {
+                    $("#numero2").val(dato.numero);
+                    $("#conceptof2").val(dato.concepto);
+                    $("#importe2").val(dato.importe);
+                    $("#listado").fadeOut();
+                    $("#formulario2").fadeIn();
+                }
+            })
+            */
+            $.ajax({
+                url: "/home/cargarRegistroJSON",
+                type: "POST",
+                data: JSON.stringify(factura),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (response) {
+                    //alert(response.responseText);
+                },
+                success: function (response) {
+                    if (response.numero == 0){
+                        console.dir(response);
+                    }
+                    $("#numero2").val(response.numero);
+                    $("#conceptof2").val(response.concepto);
+                    $("#importe2").val(response.importe);
+                    $("#listado").fadeOut();
+                    $("#formulario2").fadeIn();
+                }
+            })
         })
     })
-    function buscarTodos(){
+
+    function buscarTodos() {
         $.getJSON("/home/ListaFacturasJSON", function (datos) {
             for (var i = 0; i < datos.length; i++) {
                 $("#mitabla").append(`<tr>
@@ -82,9 +130,15 @@
         })
     }
 
+
+
+
+
 </script>
+
 <div id="listado">
     <h5>La tabla viene en Ajax JSON</h5>
+
     <table id="mitabla">
         <thead>
             <tr>
@@ -107,6 +161,7 @@
     </table>
     <hr>
 </div>
+
 <div id="formulario">
     <h5>Formulario Factura</h5>
     <form>
@@ -115,16 +170,38 @@
             <input type="text" id="numero" name="numero" placeholder="aquí el número">
         </p>
         <p>
-            <label for="Concepto">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="conceptof">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
             <input type="text" id="conceptof" name="conceptof" placeholder="aquí el concepto">
         </p>
         <p>
-            <label for="Importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
             <input type="text" id="importe" name="importe" placeholder="aquí el importe">
         </p>
         <p>
             <input type="button" value="guardar" id="guardar">
             <input type="button" value="cancelar" id="cancelar">
+        </p>
+    </form>
+</div>
+
+<div id="formulario2">
+    <h5>Formulario Edición Factura</h5>
+    <form>
+        <p>
+            <label for="numero2">Número: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="numero2" name="numero2" placeholder="aquí el número">
+        </p>
+        <p>
+            <label for="concepto2">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="conceptof2" name="conceptof2" placeholder="aquí el concepto">
+        </p>
+        <p>
+            <label for="importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="importe2" name="importe2" placeholder="aquí el importe">
+        </p>
+        <p>
+            <input type="button" value="guardar" id="guardar2">
+            <input type="button" value="cancelar" id="cancelar2">
         </p>
     </form>
 </div>

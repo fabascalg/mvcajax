@@ -7,6 +7,10 @@ public class Factura
 
     public decimal Importe { get; set; }
 
+    public Factura(){
+        
+    }
+
     public Factura(int Numero, string Concepto, decimal Importe){
         this.Numero=Numero;
         this.Concepto=Concepto;
