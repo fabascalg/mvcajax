@@ -1,7 +1,6 @@
 @{
-    ViewData["Title"] = "Lista de Facturas";
+    ViewData["Title"] = "Lista de Facturas - App SPA [Simple Page Application]";
 }
-
 <script>
     $(document).ready(function () {
 
@@ -12,10 +11,11 @@
         $("#insertar").click(function () {
             $("#listado").fadeOut();
             $("#formulario").fadeIn();
-        })
+        });
 
         buscarTodos();
 
+        // PENDIENTE DE PASAR A LA API REST
         $("#concepto").keyup(function () {
             $.getJSON("/home/ListaFacturasJSON?concepto=" + $("#concepto").val(), function (datos) {
                 $("#mitabla2").empty();
@@ -25,9 +25,16 @@
             })
         })
 
+        // FALTA LIMPIAR LOS CAMPOS
         $("#cancelar").click(function () {
             $("#listado").fadeIn();
             $("#formulario").fadeOut();
+        })
+
+        // FALTA VACIAR LOS CAMPOS
+        $("#cancelar2").click(function () {
+            $("#listado").fadeIn();
+            $("#formulario2").fadeOut();
         })
 
         $("#guardar").click(function () {
@@ -36,11 +43,10 @@
             factura.concepto = $("#conceptof").val();
             factura.importe = $("#importe").val();
             $.ajax({
-                url: "/home/insertarjson",
+                url: "/api/facturas",
                 type: "POST",
                 data: JSON.stringify(factura),
                 contentType: "application/json; charset=utf-8",
-                dataType: "json",
                 error: function (response) {
                     alert(response.responseText);
                 },
@@ -51,11 +57,36 @@
                     buscarTodos();
                 }
             })
-        })
+        });
+
+        // FALTA CREAR EN FacturasController el método para recibir la factura con los cambios e implementar los mismos en el item afectado!
+        $("#guardar2").click(function () {
+            var factura = {};
+            factura.numero = $("#numero2").val();
+            factura.concepto = $("#conceptof2").val();
+            factura.importe = $("#importe2").val();
+            $.ajax({
+                url: "/api/facturas/",
+                type: "PUT",
+                data: JSON.stringify(factura),
+                contentType: "application/json; charset=utf-8",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $("#listado").fadeIn();
+                    $("#formulario2").fadeOut();
+                    $("#mitabla").empty();
+                    buscarTodos();
+                }
+            })
+        });
 
         $(document).on('click', '.borrar', function () {
             $b = $(this);
             var n = parseInt($b.attr("id"));
+            borrar(n);
+            /*
             var factura = {};
             factura.numero = n;
             $.ajax({
@@ -71,52 +102,58 @@
                     $("#mitabla").empty();
                     buscarTodos();
                 }
-            })
-        })
+            });
+            */
+        });
 
         $(document).on('click', '.editar', function () {
             $b = $(this);
             var n = parseInt($b.attr("id"));
-            factura = {};
-            factura.numero = n;
-            /*
-            $.getJSON("/home/cargarRegistroJSON", function (dato) {
-                if (dato.numero == 0) {
-                    console.dir(dato);
-                } else {
-                    $("#numero2").val(dato.numero);
-                    $("#conceptof2").val(dato.concepto);
-                    $("#importe2").val(dato.importe);
-                    $("#listado").fadeOut();
-                    $("#formulario2").fadeIn();
+            editar(n);
+        });
+    });
+
+    function editar(n) {
+        $.ajax({
+            url: "/api/facturas/" + n,
+            type: "GET",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                if (response.numero == 0) {
+                    alert(response + " " + n);
                 }
-            })
-            */
-            $.ajax({
-                url: "/home/cargarRegistroJSON",
-                type: "POST",
-                data: JSON.stringify(factura),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                error: function (response) {
-                    //alert(response.responseText);
-                },
-                success: function (response) {
-                    if (response.numero == 0){
-                        console.dir(response);
-                    }
-                    $("#numero2").val(response.numero);
-                    $("#conceptof2").val(response.concepto);
-                    $("#importe2").val(response.importe);
-                    $("#listado").fadeOut();
-                    $("#formulario2").fadeIn();
-                }
-            })
-        })
-    })
+                $("#numero2").val(response.numero);
+                $("#conceptof2").val(response.concepto);
+                $("#importe2").val(response.importe);
+                $("#listado").fadeOut();
+                $("#formulario2").fadeIn();
+            }
+        });
+    }
+
+    function borrar(n) {
+        if (!confirm("Seguro que desea borrar el registro con Id: " + n)) {
+            return;
+        }
+        $.ajax({
+            url: "/api/facturas/" + n,
+            type: "DELETE",
+            contentType: "application/json; charset=utf-8",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                $("#mitabla").empty();
+                buscarTodos();
+            }
+        });
+    }
+
 
     function buscarTodos() {
-        $.getJSON("/home/ListaFacturasJSON", function (datos) {
+        $.getJSON("/api/facturas", function (datos) {
             for (var i = 0; i < datos.length; i++) {
                 $("#mitabla").append(`<tr>
                                         <td>${datos[i].numero}</td>
@@ -124,16 +161,13 @@
                                         <td>${datos[i].importe}</td>
                                         <td><input type="button" class="editar" value="editar" id="${datos[i].numero} e"></td>
                                         <td><input type="button" class="borrar" value="borrar" id="${datos[i].numero} b"></td>
+                                        <td><a href="" onclick="borrar(${datos[i].numero}); return false;">borrar api</a></td>
+                                        <td><a href="" onclick="editar(${datos[i].numero}); return false;">editar api</a></td>
                                      </tr>`);
 
             }
-        })
-    }
-
-
-
-
-
+        });
+    }    
 </script>
 
 <div id="listado">
@@ -145,6 +179,10 @@
                 <th>Numero</th>
                 <th>Concepto</th>
                 <th>Importe</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+                <th>Editar API</th>
+                <th>Borrar API</th>
             </tr>
         </thead>
         <tbody>

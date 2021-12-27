@@ -34,6 +34,7 @@ public class FacturaRepositorio
             lista.Add(f11);
             lista.Add(f12);
             lista.Add(f7);
+            lista.OrderBy(varName => varName.Numero);
         }
 
     }
@@ -71,17 +72,16 @@ public class FacturaRepositorio
 
     public Factura BuscarTodasFiltroNumero(int x)
     {
-        Console.WriteLine("recibido el "+x.ToString());
-        for (int n = 0; n < lista.Count; n++){
-            int valor = lista[n].Numero;
-            if (valor == x){
-                //Console.WriteLine(lista[n].Numero.ToString()+"\t"+lista[n].Concepto+"\t"+lista[n].Importe.ToString());
-                return lista[n];
+        foreach (Factura f in lista)
+        {
+            if (f.Numero == x)
+            {
+                return f;
             }
         }
-        Console.WriteLine("no se ha encontrado el número de factura");
         return new Factura();
     }
+
 
     public void InsertarFactra(Factura f)
     {
@@ -91,8 +91,8 @@ public class FacturaRepositorio
 
     public void borrarFactura(Factura f)
     {
-        // lista.Remove(f);
-        for (int n = 0; n < lista.Count; n++)
+        lista.Remove(f);
+        /*for (int n = 0; n < lista.Count; n++)
         {
             if (lista[n].Numero == f.Numero)
             {
@@ -101,5 +101,23 @@ public class FacturaRepositorio
             }
         }
         return;
+        */
+    }
+
+    public void Borrar(Factura factura)
+    {
+        lista.Remove(factura);
+    }
+
+    public void Actualizar(Factura factura)
+    {
+        for (int n = 0; n < lista.Count; n++)
+        {
+            if (lista[n].Numero == factura.Numero)
+            {
+                FacturaRepositorio.lista[n] = factura;
+                return;
+            }
+        }
     }
 }

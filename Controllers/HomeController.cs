@@ -57,13 +57,13 @@ public class HomeController : Controller
         repo.borrarFactura(factura);
         return Json("Success");
     }
-[HttpPost]
+
+    [HttpPost]
     public ActionResult cargarRegistroJSON([FromBody] Factura x)
     {
         
         FacturaRepositorio repo = new FacturaRepositorio();
         Factura lista = repo.BuscarTodasFiltroNumero(x.Numero);
-        //Console.WriteLine(lista.Numero.ToString()+"\t"+lista.Concepto+"\t"+lista.Importe.ToString());
         return Json(lista);        
     }
     public ActionResult ListaFacturasJSON(string concepto)
