@@ -5,33 +5,55 @@
 <script>
     $(document).ready(function () {
         $("#boton").click(function () {
-            $.get("home/datos",function(texto){
-                $("#mitabla").append("<tr><td>"+texto+"</td></tr>");
+            $.get("home/datos", function (texto) {
+                $("#mitabla").append("<tr><td>" + texto + "</td></tr>");
             })
         })
     })
 </script>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#array" type="button"
+            role="tab" aria-controls="home" aria-selected="true">Array de strings</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#facturas" type="button"
+            role="tab" aria-controls="profile" aria-selected="false">Facturas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#personas" type="button"
+            role="tab" aria-controls="contact" aria-selected="false">Personas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#clientes" type="button"
+            role="tab" aria-controls="contact" aria-selected="false">Clientes</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="array" role="tabpanel" aria-labelledby="array-tab">
+        <h5>array</h5>
+        <table id="mitabla">
+            <tr>
+                <th>
+                    textos
+                </th>
+            </tr>
+            <!-- este código crea las filas con los datos recibidos en VieWag (List de n string)-->
+            @foreach (var texto in ViewBag.textos)
+            {
+                <tr>
+                    <td>
+                        <div>@texto</div>
+                    </td>
+                </tr>
+            }
+            <br>
+        </table>
+        <hr>
+        <input type="button" id="boton" name="boton" value="agregar item localmente...">
+    </div>
+    <div class="tab-pane fade" id="facturas" role="tabpanel" aria-labelledby="facturas-tab">...</div>
+    <div class="tab-pane fade" id="personas" role="tabpanel" aria-labelledby="personas-tab">...</div>
+    <div class="tab-pane fade" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">...</div>
 </div>
-<h5>array</h5>
-<table id="mitabla">
-    <tr>
-        <th>
-            textos
-        </th>
-    </tr>
-    <!-- este código crea las filas con los datos recibidos en VieWag (List de n string)-->
-    @foreach (var texto in ViewBag.textos)
-    {
-        <tr>
-            <td>
-                <div>@texto</div>
-            </td>
-        </tr>
-    }
-    <br>
-</table>
-<hr>
-<input type="button" id="boton" name="boton" value="agregar item localmente...">
