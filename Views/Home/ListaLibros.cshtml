@@ -1,0 +1,225 @@
+@{
+    ViewData["Title"] = "Lista de libros - App SPA [Simple Page Application]";
+}
+<script>
+
+    $(document).ready(function () {
+
+        vistaNormal();
+
+        buscarTodos();
+
+        $("#crear").click(function () {
+            $("#listado").fadeOut();
+            $("#formulario").fadeIn();
+        });
+
+        $("#cancelar").click(function () {
+            $("#listado").fadeIn();
+            $("#formulario").fadeOut();
+            limpiarCampos();
+        })
+
+        $("#cancelar2").click(function () {
+            $("#listado").fadeIn();
+            $("#formulario2").fadeOut();
+            limpiarCampos();
+        })
+
+        $("#buscartitulo").keyup(function () {
+            var datos = {};
+            datos.isbn = "";
+            datos.title = $("#busartitulo");       
+            $.getJSON('/api/libros/', function (datos) {
+                $("#mitabla2").empty();
+                for (var i = 0; i < datos.length; i++) {
+                    $("#mitabla2").append("<tr><td>" + datos[i].isbn + "</td><td>" + datos[i].title + "</td></tr>");
+                }
+            })
+        })
+
+       $("#guardar").click(function () {
+            var libro = {};
+            libro.isbn = $("#isbn").val();
+            libro.title = $("#titulo").val();
+            $.ajax({
+                url: "/api/libros",
+                type: "POST",
+                data: JSON.stringify(libro),
+                contentType: "application/json; charset=utf-8",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $("#listado").fadeIn();
+                    $("#formulario").fadeOut();
+                    $("#mitabla").empty();
+                    buscarTodos();
+                    limpiarCampos();
+                }
+            })
+        });
+
+        // FALTA CREAR EN FacturasController el método para recibir la factura con los cambios e implementar los mismos en el item afectado!
+        $("#guardar2").click(function () {
+            var libro = {};
+            libro.isbm = $("#isbn2").val();
+            libro.title = $("#titulo2").val();
+            $.ajax({
+                url: "/api/libros/",
+                type: "PUT",
+                data: JSON.stringify(libro),
+                contentType: "application/json; charset=utf-8",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $("#listado").fadeIn();
+                    $("#formulario2").fadeOut();
+                    $("#mitabla").empty();
+                    buscarTodos();
+                    limpiarCampos();
+                }
+            })
+        });
+
+
+    })
+
+    function buscarTodos() {
+        $.getJSON("/api/libros", function (datos) {
+            for (var i = 0; i < datos.length; i++) {
+                var $isbn = $.trim(datos[i].isbn);
+                var $title = $.trim(datos[i].title);
+                $("#mitabla").append(`<tr>
+                                    <td>${$isbn}</td>
+                                    <td>${$title}</td>
+                                    <td><input type="button" onclick="borrar('${$isbn}');return false;" value="borrar"></td>
+                                    <td><input type="button" onclick="editar('${$isbn}');return false;" value="editar"></td>
+                                    </tr>`);
+
+            }
+        });
+    }
+
+    function vistaNormal() {
+        $("#formulario").fadeOut();
+        $("#formulario2").fadeOut();
+        $("#listado").fadeIn();
+    }
+
+    function limpiarCampos() {
+        $("#isbn").val("");
+        $("#titulo").val("");
+        $("#isbn2").val("");
+        $("#titulo2").val("");
+        $("#isbn3").val("");
+    }
+
+    function borrar(isbn) {
+        if (!confirm("Seguro que desea borrar el registro con ISBN: " + isbn)) {
+            return;
+        }
+        $.ajax({
+            url: "/api/libros/"+isbn,
+            type: "DELETE",
+            contentType: "application/json; charset=utf-8",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                $("#mitabla").empty();
+                buscarTodos();
+            }
+        });
+    }
+
+    function editar(isbn) {
+        console.log(isbn);
+        $.ajax({
+            url: "/api/libros/"+isbn,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            error: function (response) {
+                alert(response.responseText);
+            },
+            success: function (response) {
+                $("#isbn2").val(response.isbn);
+                $("#titulo2").val(response.title);
+                $("#isbn2").val(response.isbn);
+                $("#listado").fadeOut();
+                $("#formulario2").fadeIn();
+            }
+        });
+        /*
+        $("#isbn2").val(libro.isbn);
+        $("#titulo2").val(libro.title);
+        $("#isbn3").text(libro.isbn2);
+        $("#listado").fadeOut();
+        $("#formulario2").fadeIn();
+        */
+    }
+
+</script>
+
+<div id="listado">
+    <h5>Libros (tomado un lote de la base de datos)</h5>
+
+    <table id="mitabla">
+        <thead>
+            <tr>
+                <th style="width: 15%;">ISBN</th>
+                <th style="width: 65%;">Title</th>
+                <th style="width: 10%;">Editar</th>
+                <th style="width: 10%;">Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <hr>
+    <input type="button" value="crear" id="crear">
+    <hr>
+    <h5>La tabla filtrada viene AJAX JSON</h5>
+    <label for="filtrar">filtrar Title: &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="buscartitulo" id="buscartitulo">
+
+    <table id="mitabla2">
+    </table>
+    <hr>
+</div>
+
+<div id="formulario">
+    <h5>Formulario Libro</h5>
+    <form>
+        <p>
+            <label for="isbn">ISBN: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="isbn" name="isbn" placeholder="aquí el isbn">
+        </p>
+        <p>
+            <label for="titulo">Título: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="titulo" name="titulo" placeholder="aquí el titulo">
+        </p>
+        <p>
+            <input type="button" value="guardar" id="guardar">
+            <input type="button" value="cancelar" id="cancelar">
+        </p>
+    </form>
+</div>
+
+<div id="formulario2">
+    <h5>Formulario Edición Libro <label is="isbn3" name="isbn3"></label></h5>
+    <form>
+        <p>
+            <label for="isbn2">ISBN: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="isbn2" name="isbn2" placeholder="no vacíe el isbn">
+        </p>
+        <p>
+            <label for="titulo2">Título: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="titulo2" name="titulo2" placeholder="no vacíe el titulo">
+        </p>
+        <p>
+            <input type="button" value="guardar" id="guardar2">
+            <input type="button" value="cancelar" id="cancelar2">
+        </p>
+    </form>
+</div>

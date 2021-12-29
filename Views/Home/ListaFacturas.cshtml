@@ -25,17 +25,19 @@
             })
         })
 
-        // FALTA LIMPIAR LOS CAMPOS
         $("#cancelar").click(function () {
             $("#listado").fadeIn();
             $("#formulario").fadeOut();
+            limpiarCampos();
         })
 
-        // FALTA VACIAR LOS CAMPOS
         $("#cancelar2").click(function () {
             $("#listado").fadeIn();
             $("#formulario2").fadeOut();
+            limpiarCampos();
         })
+
+
 
         $("#guardar").click(function () {
             var factura = {};
@@ -55,6 +57,7 @@
                     $("#formulario").fadeOut();
                     $("#mitabla").empty();
                     buscarTodos();
+                    limpiarCampos();
                 }
             })
         });
@@ -78,6 +81,7 @@
                     $("#formulario2").fadeOut();
                     $("#mitabla").empty();
                     buscarTodos();
+                    limpiarCampos();
                 }
             })
         });
@@ -167,6 +171,15 @@
 
             }
         });
+
+        function limpiarCampos() {
+            $("#numero").val("");
+            $("#conceptof").val("");
+            $("#importe").val("");
+            $("#numero2").val("");
+            $("#conceptof2").val("");
+            $("#importe2").val("");
+        }
     }    
 </script>
 
@@ -223,19 +236,19 @@
 </div>
 
 <div id="formulario2">
-    <h5>Formulario Edición Factura</h5>
+    <h5>Formulario Edición Factura </h5>
     <form>
         <p>
             <label for="numero2">Número: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="text" id="numero2" name="numero2" placeholder="aquí el número">
+            <input type="text" id="numero2" name="numero2" placeholder="no vacíe este campo">
         </p>
         <p>
             <label for="concepto2">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="text" id="conceptof2" name="conceptof2" placeholder="aquí el concepto">
+            <input type="text" id="conceptof2" name="conceptof2" placeholder="no vacíe el concepto">
         </p>
         <p>
             <label for="importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="text" id="importe2" name="importe2" placeholder="aquí el importe">
+            <input type="text" id="importe2" name="importe2" placeholder="no vacíe el importe">
         </p>
         <p>
             <input type="button" value="guardar" id="guardar2">

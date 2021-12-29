@@ -16303,6 +16303,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\ListaLibros.cshtml",
+      "TargetPath": "Views\\Home\\ListaLibros.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -16330,11 +16335,6 @@
     {
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Cliente\\ListaClientes.cshtml",
       "TargetPath": "Views\\Cliente\\ListaClientes.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     },
     {

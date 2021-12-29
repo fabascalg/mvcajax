@@ -1,0 +1,38 @@
+GET https://localhost:7010/api/libros HTTP/1.1
+
+###
+POST https://localhost:7010/api/libros HTTP/1.1
+content-type: application/json
+
+{
+    "ISBN": "3.1416-PI^2",
+    "title": "Las aventuras de Robinson Crusoe y el Código Fuente"
+}
+
+###
+POST https://localhost:7010/api/libros HTTP/1.1
+content-type: application/json
+
+{
+    "ISBN": "978-84-415-3314-1",
+    "title": "Node.JS"
+}
+
+###
+DELETE https://localhost:7010/api/libros/0-9317178-6-8 HTTP/1.1
+
+###
+GET https://localhost:7010/api/libros/0-5341986-6-X  HTTP/1.1
+
+
+###
+PUT https://localhost:7010/api/libros/ HTTP/1.1
+content-type: application/json
+
+{
+    "isbn": "3.1416-PI^2",
+    "title": "Robinson y el código espagueti"
+}
+
+###
+GET https://localhost:7010/api/libros/?concepto="w"  HTTP/1.1

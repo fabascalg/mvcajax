@@ -35,6 +35,11 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult ListaLibros()
+    {
+        return View();
+    }    
+
     public IActionResult ListaPersonas()
     {
         PersonaRepositiorio repo = new PersonaRepositiorio();
@@ -90,11 +95,6 @@ public class HomeController : Controller
     public ActionResult Datos()
     {
         return Content("tu del servidor");
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
