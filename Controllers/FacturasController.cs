@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using mvcajax.Models;
 
+
 namespace mvcajax.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+//[Area("Maps")]
 public class FacturasController : ControllerBase
 {
 
@@ -23,11 +25,20 @@ public class FacturasController : ControllerBase
         return repo.BuscarTodas();
     }
 
-    [HttpGet("{numero}")]
-    public Factura Get(int numero)
+    [HttpGet("{nu:int}")]
+    public Factura Get(int nu)
     {
         FacturaRepositorio repo = new FacturaRepositorio();
-        return repo.BuscarTodasFiltroNumero(numero);
+        return repo.BuscarTodasFiltroNumero(nu);
+    }
+
+    //[RequireRequestValue("someString")]
+    //[HttpGet("/{cadena}")][FromQuery]
+    [HttpGet("{cadena:alpha}")]
+    public List<Factura> GetString(string cadena)
+    {
+        FacturaRepositorio repo = new FacturaRepositorio();
+        return repo.BuscarTodasFiltroConcepto(cadena);
     }
 
     [HttpPost]
@@ -37,18 +48,19 @@ public class FacturasController : ControllerBase
         repo.InsertarFactra(factura);
     }
 
-    [HttpPut]
-    public void Actualizar(Factura f)
+    [HttpPut("{n}")]
+    public void Actualizar(int n, Factura f)
     {
         FacturaRepositorio repo = new FacturaRepositorio();
-        repo.Actualizar(f);
+        repo.Actualizar(n, f);
     }
 
-    [HttpDelete ("{Numero:int}")]
+    [HttpDelete("{n}")]
 
-    public void Borrar(int numero){
+    public void Borrar(int n)
+    {
         FacturaRepositorio repo = new FacturaRepositorio();
-        repo.Borrar(new Factura(numero));
+        repo.Borrar(new Factura(n));
     }
 
 }

@@ -17,11 +17,14 @@ DELETE https://localhost:7010/api/facturas/6 HTTP/1.1
 GET https://localhost:7010/api/facturas/3 HTTP/1.1
 
 ###
-PUT https://localhost:7010/api/facturas HTTP/1.1
+PUT https://localhost:7010/api/facturas/16 HTTP/1.1
 content-type: application/json
 
 {
-    "numero": 16,
-    "concepto": "auricular güenisimo",
-    "importe": 200
+    "numero": 13,
+    "concepto": "AuriculaR GüenisimO",
+    "importe": 99
 }
+
+###
+GET https://localhost:7010/api/facturas/orde HTTP/1.1

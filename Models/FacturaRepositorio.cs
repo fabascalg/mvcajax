@@ -57,6 +57,7 @@ public class FacturaRepositorio
     {
         return lista;
     }
+
     public List<Factura> BuscarTodasFiltroConcepto(string concepto)
     {
         List<Factura> lista2 = new List<Factura>();
@@ -92,16 +93,6 @@ public class FacturaRepositorio
     public void borrarFactura(Factura f)
     {
         lista.Remove(f);
-        /*for (int n = 0; n < lista.Count; n++)
-        {
-            if (lista[n].Numero == f.Numero)
-            {
-                FacturaRepositorio.lista.Remove(lista[n]);
-                break;
-            }
-        }
-        return;
-        */
     }
 
     public void Borrar(Factura factura)
@@ -109,11 +100,11 @@ public class FacturaRepositorio
         lista.Remove(factura);
     }
 
-    public void Actualizar(Factura factura)
-    {
+    public void Actualizar(int nU, Factura factura)
+    {        
         for (int n = 0; n < lista.Count; n++)
         {
-            if (lista[n].Numero == factura.Numero)
+            if (lista[n].Numero == nU)
             {
                 FacturaRepositorio.lista[n] = factura;
                 return;

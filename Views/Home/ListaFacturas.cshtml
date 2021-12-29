@@ -1,23 +1,40 @@
 @{
     ViewData["Title"] = "Lista de Facturas - App SPA [Simple Page Application]";
 }
+<style>
+    .marco_sombra {
+        border: 1px solid #f0f0f0;
+        border-radius: 2px;
+        /*background-color: lightgray;*/
+        padding: 10px;
+    }
+    label{
+        width: 100px;
+    }
+</style>
 <script>
+    /* procedimientos javascript en su mayoría implementados con la librería JQuery  */
     $(document).ready(function () {
 
-        $("#listado").fadeIn();
-        $("#formulario").fadeOut();
-        $("#formulario2").fadeOut();
+        $("#browse").fadeIn();
+        $("#browse").addClass("marco_sombra");
+        $("#areaCrear").addClass("marco_sombra");
+        $("#areaActualizar").addClass("marco_sombra");
+        $("#areaCrear").fadeOut();
+        $("#areaActualizar").fadeOut();
 
-        $("#insertar").click(function () {
-            $("#listado").fadeOut();
-            $("#formulario").fadeIn();
+        /* asignación evento click botón 'Crear' */
+        $("#crear").click(function () {
+            $("#browse").fadeOut();
+            $("#areaCrear").fadeIn();
         });
 
+        /* recibir inicialmente todos los registros... */
         buscarTodos();
 
-        // PENDIENTE DE PASAR A LA API REST
+        /* filtro por comienzo de 'Concepto' ... C R^2 UD */
         $("#concepto").keyup(function () {
-            $.getJSON("/home/ListaFacturasJSON?concepto=" + $("#concepto").val(), function (datos) {
+            $.getJSON("/api/facturas/" + $("#concepto").val(), function (datos) {
                 $("#mitabla2").empty();
                 for (var i = 0; i < datos.length; i++) {
                     $("#mitabla2").append("<tr><td>" + datos[i].numero + "</td><td>" + datos[i].concepto + "</td><td>" + datos[i].importe + "</td></tr>");
@@ -25,19 +42,21 @@
             })
         })
 
+        /* botón cancelar del área 'Crear' */
         $("#cancelar").click(function () {
-            $("#listado").fadeIn();
-            $("#formulario").fadeOut();
+            $("#browse").fadeIn();
+            $("#areaCrear").fadeOut();
             limpiarCampos();
         })
 
+        /* botón cancelar del área 'Actualizar' */
         $("#cancelar2").click(function () {
-            $("#listado").fadeIn();
-            $("#formulario2").fadeOut();
+            $("#browse").fadeIn();
+            $("#areaActualizar").fadeOut();
             limpiarCampos();
         })
 
-
+        /* botón guardar del área 'Crear' */
 
         $("#guardar").click(function () {
             var factura = {};
@@ -53,8 +72,8 @@
                     alert(response.responseText);
                 },
                 success: function (response) {
-                    $("#listado").fadeIn();
-                    $("#formulario").fadeOut();
+                    $("#browse").fadeIn();
+                    $("#areaCrear").fadeOut();
                     $("#mitabla").empty();
                     buscarTodos();
                     limpiarCampos();
@@ -62,14 +81,17 @@
             })
         });
 
-        // FALTA CREAR EN FacturasController el método para recibir la factura con los cambios e implementar los mismos en el item afectado!
+        /* botón guardar del área 'Actualizar' */
         $("#guardar2").click(function () {
+            var nu = $("#numero2h").val();
             var factura = {};
             factura.numero = $("#numero2").val();
             factura.concepto = $("#conceptof2").val();
             factura.importe = $("#importe2").val();
+            console.dir(factura);
+            console.log(nu);
             $.ajax({
-                url: "/api/facturas/",
+                url: "/api/facturas/" + nu,
                 type: "PUT",
                 data: JSON.stringify(factura),
                 contentType: "application/json; charset=utf-8",
@@ -77,8 +99,8 @@
                     alert(response.responseText);
                 },
                 success: function (response) {
-                    $("#listado").fadeIn();
-                    $("#formulario2").fadeOut();
+                    $("#browse").fadeIn();
+                    $("#areaActualizar").fadeOut();
                     $("#mitabla").empty();
                     buscarTodos();
                     limpiarCampos();
@@ -86,57 +108,53 @@
             })
         });
 
+        /* asignación asincrónica a los elementos con la clase borrar de la función que invoca el método borrar*/
         $(document).on('click', '.borrar', function () {
             $b = $(this);
             var n = parseInt($b.attr("id"));
             borrar(n);
-            /*
-            var factura = {};
-            factura.numero = n;
-            $.ajax({
-                url: "/home/borrarJSON",
-                type: "POST",
-                data: JSON.stringify(factura),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                error: function (response) {
-                    alert(response.responseText);
-                },
-                success: function (response) {
-                    $("#mitabla").empty();
-                    buscarTodos();
-                }
-            });
-            */
         });
 
+        /* asignación asincrónica a los elementos con la clase editar de la funcion que invoca el método 'Actualizar'   */
         $(document).on('click', '.editar', function () {
             $b = $(this);
             var n = parseInt($b.attr("id"));
             editar(n);
         });
+
     });
 
-    function editar(n) {
-        $.ajax({
-            url: "/api/facturas/" + n,
-            type: "GET",
-            error: function (response) {
-                alert(response.responseText);
-            },
-            success: function (response) {
-                if (response.numero == 0) {
-                    alert(response + " " + n);
-                }
-                $("#numero2").val(response.numero);
-                $("#conceptof2").val(response.concepto);
-                $("#importe2").val(response.importe);
-                $("#listado").fadeOut();
-                $("#formulario2").fadeIn();
+    /* Método leer (todos!) C R UD */
+    function buscarTodos() {
+        $.getJSON("/api/facturas", function (datos) {
+            for (var i = 0; i < datos.length; i++) {
+                $("#mitabla").append(`<tr>
+                                        <td>${datos[i].numero}</td>
+                                        <td>${datos[i].concepto}</td>
+                                        <td>${datos[i].importe}</td>
+                                        <td><input type="button" class="editar" value="editar" title="éste botón se programa de forma no invasiva con código javascript al haber cargado el documento" id="${datos[i].numero} e"></td>
+                                        <td><input type="button" class="borrar" value="borrar" title="éste botón se programa de forma no invasiva con código javascript al haber cargado el documento" id="${datos[i].numero} b"></td>
+                                        <td><a href="" title="este enlace invoca una función de forma directa, retorna falso para anular la acción href" onclick="borrar(${datos[i].numero}); return false;">borrar api</a></td>
+                                        <td><a href="" title="este enlace invoca una función de forma directa, retorna falso para anular la acción href"  onclick="editar(${datos[i].numero}); return false;">editar api</a></td>
+                                     </tr>`);
+
             }
+        });
+
+    }
+
+    function editar(n) {
+        $.getJSON("/api/facturas/" + n, function (dato) {
+            $("#numero2h").val(dato.numero);
+            $("#numero2").val(dato.numero);
+            $("#conceptof2").val(dato.concepto);
+            $("#importe2").val(dato.importe);
+            $("#browse").fadeOut();
+            $("#areaActualizar").fadeIn();
         });
     }
 
+    /* Método borrar CRU D */
     function borrar(n) {
         if (!confirm("Seguro que desea borrar el registro con Id: " + n)) {
             return;
@@ -155,37 +173,19 @@
         });
     }
 
-
-    function buscarTodos() {
-        $.getJSON("/api/facturas", function (datos) {
-            for (var i = 0; i < datos.length; i++) {
-                $("#mitabla").append(`<tr>
-                                        <td>${datos[i].numero}</td>
-                                        <td>${datos[i].concepto}</td>
-                                        <td>${datos[i].importe}</td>
-                                        <td><input type="button" class="editar" value="editar" id="${datos[i].numero} e"></td>
-                                        <td><input type="button" class="borrar" value="borrar" id="${datos[i].numero} b"></td>
-                                        <td><a href="" onclick="borrar(${datos[i].numero}); return false;">borrar api</a></td>
-                                        <td><a href="" onclick="editar(${datos[i].numero}); return false;">editar api</a></td>
-                                     </tr>`);
-
-            }
-        });
-
-        function limpiarCampos() {
-            $("#numero").val("");
-            $("#conceptof").val("");
-            $("#importe").val("");
-            $("#numero2").val("");
-            $("#conceptof2").val("");
-            $("#importe2").val("");
-        }
-    }    
+    function limpiarCampos() {
+        $("#numero").val("");
+        $("#conceptof").val("");
+        $("#importe").val("");
+        $("#numero2").val("");
+        $("#conceptof2").val("");
+        $("#importe2").val("");
+    }
 </script>
 
-<div id="listado">
-    <h5>Facturas (array en memoria)</h5>
 
+<div id="browse">
+    <h5>Facturas (array en memoria) cumple CRUD en SPA Nota: falta <span style="color: red; text-weight: 800;">"paginar"</span> resultados</h5>
     <table id="mitabla">
         <thead>
             <tr>
@@ -202,7 +202,7 @@
         </tbody>
     </table>
     <hr>
-    <input type="button" value="insertar" id="insertar">
+    <input type="button" value="crear" id="crear">
     <hr>
     <h5>La tabla filtrada viene AJAX JSON</h5>
     <label for="filtrar">filtrar concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="concepto"
@@ -213,8 +213,9 @@
     <hr>
 </div>
 
-<div id="formulario">
-    <h5>Formulario Factura</h5>
+<!-- área de 'creación' de nuevos registros // también actúa como detalle [por defecto oculta] -->
+<div id="areaCrear">
+    <h5>Formulario Crear Factura C RUD</h5>
     <form>
         <p>
             <label for="Numero">Número: &nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -222,7 +223,7 @@
         </p>
         <p>
             <label for="conceptof">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="text" id="conceptof" name="conceptof" placeholder="aquí el concepto">
+            <input type="text" id="conceptof" name="conceptof" size="100" placeholder="aquí el concepto">
         </p>
         <p>
             <label for="importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -235,16 +236,18 @@
     </form>
 </div>
 
-<div id="formulario2">
-    <h5>Formulario Edición Factura </h5>
+<!-- área de 'actualizar' de registro [por defecto oculta] -->
+<div id="areaActualizar">
+    <h5>Formulario Edición Factura CR U D</h5>
     <form>
         <p>
             <label for="numero2">Número: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="numero2h" id="numero2h" hidden>
             <input type="text" id="numero2" name="numero2" placeholder="no vacíe este campo">
         </p>
         <p>
             <label for="concepto2">Concepto: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="text" id="conceptof2" name="conceptof2" placeholder="no vacíe el concepto">
+            <input type="text" id="conceptof2" name="conceptof2" size="100" placeholder="no vacíe el concepto">
         </p>
         <p>
             <label for="importe">Importe: &nbsp;&nbsp;&nbsp;&nbsp;</label>
