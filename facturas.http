@@ -1,7 +1,7 @@
-GET https://localhost:7010/api/facturas HTTP/1.1
+GET https://localhost:7010/api/v1/facturas HTTP/1.1
 
 ###
-POST https://localhost:7010/api/facturas HTTP/1.1
+POST https://localhost:7010/api/v1/facturas HTTP/1.1
 content-type: application/json
 
 {
@@ -11,13 +11,13 @@ content-type: application/json
 }
 
 ###
-DELETE https://localhost:7010/api/facturas/6 HTTP/1.1
+DELETE https://localhost:7010/api/v1/facturas/6 HTTP/1.1
 
 ###
-GET https://localhost:7010/api/facturas/3 HTTP/1.1
+GET https://localhost:7010/api/v1/facturas/3 HTTP/1.1
 
 ###
-PUT https://localhost:7010/api/facturas/16 HTTP/1.1
+PUT https://localhost:7010/api/v1/facturas/16 HTTP/1.1
 content-type: application/json
 
 {
@@ -27,4 +27,4 @@ content-type: application/json
 }
 
 ###
-GET https://localhost:7010/api/facturas/orde HTTP/1.1
+GET https://localhost:7010/api/v1/facturas/tele HTTP/1.1

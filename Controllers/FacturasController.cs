@@ -6,11 +6,9 @@ using mvcajax.Models;
 namespace mvcajax.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-//[Area("Maps")]
+[Route("api/v1/[controller]")]
 public class FacturasController : ControllerBase
 {
-
     private readonly ILogger<FacturasController> _logger;
 
     public FacturasController(ILogger<FacturasController> logger)
@@ -21,46 +19,43 @@ public class FacturasController : ControllerBase
     [HttpGet]
     public List<Factura> Get()
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        return repo.BuscarTodas();
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        return repositorio.BuscarTodas();
     }
 
-    [HttpGet("{nu:int}")]
-    public Factura Get(int nu)
+    [HttpGet("{numeroFactura:int}")]
+    public Factura Get(int numeroFactura)
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        return repo.BuscarTodasFiltroNumero(nu);
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        return repositorio.BuscarTodasFiltroNumero(numeroFactura);
     }
-
-    //[RequireRequestValue("someString")]
-    //[HttpGet("/{cadena}")][FromQuery]
-    [HttpGet("{cadena:alpha}")]
-    public List<Factura> GetString(string cadena)
+    [HttpGet("{parteDeConcepto:alpha}")]
+    public List<Factura> GetString(string parteDeConcepto)
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        return repo.BuscarTodasFiltroConcepto(cadena);
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        return repositorio.BuscarTodasFiltroConcepto(parteDeConcepto);
     }
 
     [HttpPost]
     public void Insertar(Factura factura)
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        repo.InsertarFactra(factura);
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        repositorio.InsertarFactra(factura);
     }
 
-    [HttpPut("{n}")]
-    public void Actualizar(int n, Factura f)
+    [HttpPut("{numero:int}")]
+    public void Actualizar(int numero, Factura f)
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        repo.Actualizar(n, f);
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        repositorio.Actualizar(numero, f);
     }
 
-    [HttpDelete("{n}")]
+    [HttpDelete("{numero:int}")]
 
-    public void Borrar(int n)
+    public void Borrar(int numero)
     {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        repo.Borrar(new Factura(n));
+        FacturaRepositorio repositorio = new FacturaRepositorio();
+        repositorio.Borrar(new Factura(numero));
     }
 
 }
