@@ -16338,11 +16338,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\ListaPersonas.cshtml",
-      "TargetPath": "Views\\Home\\ListaPersonas.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "d:\\www\\frontend\\mvcajax\\Views\\Home\\ListaFacturas.cshtml",
       "TargetPath": "Views\\Home\\ListaFacturas.cshtml",
       "FileKind": "mvc"

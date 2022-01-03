@@ -1,12 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<style>
+    div #clientes, div #array, div #facturas, div #personas {
+        margin: 20px;
+    }
+</style>
 <script>
     $(document).ready(function () {
-        $("#boton").click(function () {
+        $("#botonArray").click(function () {
             $.get("home/datos", function (texto) {
-                $("#mitabla").append("<tr><td>" + texto + "</td></tr>");
+                $("#mitabla1").append("<tr><td>" + texto + "</td></tr>");
+            })
+        })
+        $("#botonPersonas").click(function () {
+            $.getJSON("/home/ListaPersonasJSON", function (datos) {
+                for (var i = 0; i < datos.length; i++) {
+                    $("#mitabla2").append("<tr><td>" + datos[i].nombre + "</td><td>" + datos[i].apellidos + "</td></tr>");
+                }
+                //console.table(datos);
             })
         })
     })
@@ -17,24 +29,24 @@
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#array" type="button"
             role="tab" aria-controls="home" aria-selected="true">Array de strings</button>
     </li>
-    <li class="nav-item" role="presentation">
+    <!--li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#facturas" type="button"
             role="tab" aria-controls="profile" aria-selected="false">Facturas</button>
-    </li>
+    </li-->
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#personas" type="button"
             role="tab" aria-controls="contact" aria-selected="false">Personas</button>
     </li>
-    <li class="nav-item" role="presentation">
+    <!--li class="nav-item" role="presentation">
         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#clientes" type="button"
             role="tab" aria-controls="contact" aria-selected="false">Clientes</button>
-    </li>
+    </li-->
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="array" role="tabpanel" aria-labelledby="array-tab">
         <h5>array</h5>
         <h6>experimento bootstrap fichas!</h6>
-        <table id="mitabla">
+        <table id="mitabla1">
             <tr>
                 <th>
                     textos
@@ -52,9 +64,31 @@
             <br>
         </table>
         <hr>
-        <input type="button" id="boton" name="boton" value="agregar item localmente...">
+        <input type="button" id="botonArray" name="botonArray" value="agregar item localmente...">
     </div>
-    <div class="tab-pane fade" id="facturas" role="tabpanel" aria-labelledby="facturas-tab">...</div>
-    <div class="tab-pane fade" id="personas" role="tabpanel" aria-labelledby="personas-tab">...</div>
-    <div class="tab-pane fade" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">...</div>
+    <!--div class="tab-pane fade" id="facturas" role="tabpanel" aria-labelledby="facturas-tab">...</div-->
+    <div class="tab-pane fade" id="personas" role="tabpanel" aria-labelledby="personas-tab">
+        <h5>Personas (array en memoria)</h5>
+        <table id="mitabla2">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.ListaPersonas)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellidos</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <br>
+        <input type="button" value="agregar personas" id="botonPersonas" name="botonPersonas">
+    </div>
+    <!--div class="tab-pane fade" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">...</div-->
 </div>

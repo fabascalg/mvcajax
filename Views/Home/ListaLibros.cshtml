@@ -30,7 +30,7 @@
             var datos = {};
             datos.isbn = "";
             datos.title = $("#busartitulo");       
-            $.getJSON('/api/libros/', function (datos) {
+            $.getJSON('/api/v1/libros/', function (datos) {
                 $("#mitabla2").empty();
                 for (var i = 0; i < datos.length; i++) {
                     $("#mitabla2").append("<tr><td>" + datos[i].isbn + "</td><td>" + datos[i].title + "</td></tr>");
@@ -43,7 +43,7 @@
             libro.isbn = $("#isbn").val();
             libro.title = $("#titulo").val();
             $.ajax({
-                url: "/api/libros",
+                url: "/api/v1/libros",
                 type: "POST",
                 data: JSON.stringify(libro),
                 contentType: "application/json; charset=utf-8",
@@ -66,7 +66,7 @@
             libro.isbm = $("#isbn2").val();
             libro.title = $("#titulo2").val();
             $.ajax({
-                url: "/api/libros/",
+                url: "/api/v1/libros/",
                 type: "PUT",
                 data: JSON.stringify(libro),
                 contentType: "application/json; charset=utf-8",
@@ -82,16 +82,16 @@
                 }
             })
         });
-
-
     })
 
     function buscarTodos() {
-        $.getJSON("/api/libros", function (datos) {
+        $.getJSON("/api/v1/libros", function (datos) {
             for (var i = 0; i < datos.length; i++) {
+                var $id = datos[i].id;
                 var $isbn = $.trim(datos[i].isbn);
                 var $title = $.trim(datos[i].title);
                 $("#mitabla").append(`<tr>
+                                    <td>${$id}</td>
                                     <td>${$isbn}</td>
                                     <td>${$title}</td>
                                     <td><input type="button" onclick="borrar('${$isbn}');return false;" value="borrar"></td>
@@ -121,7 +121,7 @@
             return;
         }
         $.ajax({
-            url: "/api/libros/"+isbn,
+            url: "/api/v1/libros/"+isbn,
             type: "DELETE",
             contentType: "application/json; charset=utf-8",
             error: function (response) {
@@ -135,9 +135,8 @@
     }
 
     function editar(isbn) {
-        console.log(isbn);
         $.ajax({
-            url: "/api/libros/"+isbn,
+            url: "/api/v1/libros/"+isbn,
             type: "GET",
             contentType: "application/json; charset=utf-8",
             error: function (response) {
@@ -151,13 +150,6 @@
                 $("#formulario2").fadeIn();
             }
         });
-        /*
-        $("#isbn2").val(libro.isbn);
-        $("#titulo2").val(libro.title);
-        $("#isbn3").text(libro.isbn2);
-        $("#listado").fadeOut();
-        $("#formulario2").fadeIn();
-        */
     }
 
 </script>
@@ -168,8 +160,9 @@
     <table id="mitabla">
         <thead>
             <tr>
-                <th style="width: 15%;">ISBN</th>
-                <th style="width: 65%;">Title</th>
+                <th style="width: 10%">Id</th>
+                <th style="width: 10%;">ISBN</th>
+                <th style="width: 60%;">Title</th>
                 <th style="width: 10%;">Editar</th>
                 <th style="width: 10%;">Borrar</th>
             </tr>

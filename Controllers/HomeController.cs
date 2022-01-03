@@ -24,14 +24,16 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        // para el área de textos array
         ViewBag.textos = textos;
+        // para el área de personas array por repositorio
+        PersonaRepositiorio repo = new PersonaRepositiorio();
+        ViewBag.listapersonas = repo.BuscarTodas();
         return View();
     }
 
     public IActionResult ListaFacturas()
     {
-        //FacturaRepositorio repo = new FacturaRepositorio();
-        //ViewBag.listafacturas = repo.BuscarTodas();
         return View();
     }
 
@@ -39,52 +41,6 @@ public class HomeController : Controller
     {
         return View();
     }    
-
-    public IActionResult ListaPersonas()
-    {
-        PersonaRepositiorio repo = new PersonaRepositiorio();
-        ViewBag.listapersonas = repo.BuscarTodas();
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult InsertarJSON([FromBody] Factura factura)
-    {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        repo.InsertarFactra(factura);
-        return Json("Success");
-    }
-
-    [HttpPost]
-    public IActionResult borrarJSON([FromBody] Factura factura)
-    {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        repo.borrarFactura(factura);
-        return Json("Success");
-    }
-
-    [HttpPost]
-    public ActionResult cargarRegistroJSON([FromBody] Factura x)
-    {
-        
-        FacturaRepositorio repo = new FacturaRepositorio();
-        Factura lista = repo.BuscarTodasFiltroNumero(x.Numero);
-        return Json(lista);        
-    }
-    public ActionResult ListaFacturasJSON(string concepto)
-    {
-        FacturaRepositorio repo = new FacturaRepositorio();
-        List<Factura> lista;
-        if (concepto != null)
-        {
-            lista = repo.BuscarTodasFiltroConcepto(concepto);
-        }
-        else
-        {
-            lista = repo.BuscarTodas();
-        }
-        return Json(lista);
-    }
 
     public ActionResult ListaPersonasJSON()
     {

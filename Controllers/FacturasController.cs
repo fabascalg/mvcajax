@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using mvcajax.Models;
 
@@ -7,6 +8,7 @@ namespace mvcajax.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
+[EnableCors]
 public class FacturasController : ControllerBase
 {
     private readonly ILogger<FacturasController> _logger;
@@ -27,7 +29,7 @@ public class FacturasController : ControllerBase
     public Factura Get(int numeroFactura)
     {
         FacturaRepositorio repositorio = new FacturaRepositorio();
-        return repositorio.BuscarTodasFiltroNumero(numeroFactura);
+        return repositorio.BuscarPrimeraConFiltroNumero(numeroFactura);
     }
     [HttpGet("{parteDeConcepto:alpha}")]
     public List<Factura> GetString(string parteDeConcepto)
@@ -37,10 +39,18 @@ public class FacturasController : ControllerBase
     }
 
     [HttpPost]
-    public void Insertar(Factura factura)
+    public string Insertar(Factura factura)
     {
         FacturaRepositorio repositorio = new FacturaRepositorio();
-        repositorio.InsertarFactra(factura);
+        int resultado = repositorio.InsertarFactra(factura);
+        if (resultado == -1)
+        {
+            return "no success" + resultado.ToString();
+        }
+        else
+        {
+            return "sucess " + resultado.ToString();
+        }
     }
 
     [HttpPut("{numero:int}")]

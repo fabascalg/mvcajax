@@ -13,7 +13,7 @@ public class LibrosRepositorio
     {
         if (nInstancias++ == 0)
         {
-            string query = "SELECT ISBN, title FROM titles ORDER BY ISBN LIMIT 2000,6;";
+            string query = "SELECT id,ISBN,title FROM titles ORDER BY ISBN LIMIT 2000,10;";
             MySqlConnection databaseConnection = new MySqlConnection(connectionString);
             MySqlCommand commandDatabase = new MySqlCommand(query, databaseConnection);
             databaseConnection.Open();
@@ -23,7 +23,7 @@ public class LibrosRepositorio
             {
                 while (reader.Read())
                 {
-                    Libro libro = new Libro(reader.GetString("ISBN"), reader.GetString("title"));
+                    Libro libro = new Libro(reader.GetInt32("id"),reader.GetString("ISBN"), reader.GetString("title"));
                     lista.Add(libro);
                 }
             }

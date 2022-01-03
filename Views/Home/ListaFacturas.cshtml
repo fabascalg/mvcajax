@@ -34,7 +34,7 @@
 
         /* filtro por comienzo de 'Concepto' ... C R^2 UD */
         $("#concepto").keyup(function () {
-            $.getJSON("/api/facturas/" + $("#concepto").val(), function (datos) {
+            $.getJSON("/api/v1/facturas/" + $("#concepto").val(), function (datos) {
                 $("#mitabla2").empty();
                 for (var i = 0; i < datos.length; i++) {
                     $("#mitabla2").append("<tr><td>" + datos[i].numero + "</td><td>" + datos[i].concepto + "</td><td>" + datos[i].importe + "</td></tr>");
@@ -64,7 +64,7 @@
             factura.concepto = $("#conceptof").val();
             factura.importe = $("#importe").val();
             $.ajax({
-                url: "/api/facturas",
+                url: "/api/v1/facturas",
                 type: "POST",
                 data: JSON.stringify(factura),
                 contentType: "application/json; charset=utf-8",
@@ -91,7 +91,7 @@
             console.dir(factura);
             console.log(nu);
             $.ajax({
-                url: "/api/facturas/" + nu,
+                url: "/api/v1/facturas/" + nu,
                 type: "PUT",
                 data: JSON.stringify(factura),
                 contentType: "application/json; charset=utf-8",
@@ -126,7 +126,7 @@
 
     /* Método leer (todos!) C R UD */
     function buscarTodos() {
-        $.getJSON("/api/facturas", function (datos) {
+        $.getJSON("/api/v1/facturas", function (datos) {
             for (var i = 0; i < datos.length; i++) {
                 $("#mitabla").append(`<tr>
                                         <td>${datos[i].numero}</td>
@@ -144,7 +144,7 @@
     }
 
     function editar(n) {
-        $.getJSON("/api/facturas/" + n, function (dato) {
+        $.getJSON("/api/v1/facturas/" + n, function (dato) {
             $("#numero2h").val(dato.numero);
             $("#numero2").val(dato.numero);
             $("#conceptof2").val(dato.concepto);
@@ -160,7 +160,7 @@
             return;
         }
         $.ajax({
-            url: "/api/facturas/" + n,
+            url: "/api/v1/facturas/" + n,
             type: "DELETE",
             contentType: "application/json; charset=utf-8",
             error: function (response) {

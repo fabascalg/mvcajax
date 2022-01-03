@@ -5,23 +5,23 @@ using mvcajax.Models;
 namespace mvcajax.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class LibrosController : ControllerBase
 {
 
     [HttpGet]
     public List<Libro> Get()
     {
-        LibrosRepositorio repo = new LibrosRepositorio();
-        return repo.TandaLibros();
+        LibrosRepositorio repositorio = new LibrosRepositorio();
+        return repositorio.TandaLibros();
     }
 
     [HttpGet("{isbn}")]
-    public Libro GetISBN(string isbn)
+    public Libro Get(string isbn)
     {
         Console.WriteLine("controlador recibe: " + isbn);
-        LibrosRepositorio repo = new LibrosRepositorio();
-        return repo.BuscarISBN(isbn);
+        LibrosRepositorio repositorio = new LibrosRepositorio();
+        return repositorio.BuscarISBN(isbn);
     }
 
     /*[HttpGet("{isbn,title}")]
@@ -36,23 +36,22 @@ public class LibrosController : ControllerBase
     [HttpPost]
     public bool Crear(Libro libro)
     {
-        LibrosRepositorio repo = new LibrosRepositorio();
-        return repo.Crear(libro);
+        LibrosRepositorio repositorio = new LibrosRepositorio();
+        return repositorio.Crear(libro);
     }
 
     [HttpPut]
-    public void Actualizar(Libro l)
+    public void Actualizar(Libro libro)
     {
-        LibrosRepositorio repo = new LibrosRepositorio();
-        repo.Actualizar(l);
+        LibrosRepositorio repositorio = new LibrosRepositorio();
+        repositorio.Actualizar(libro);
     }
 
     [HttpDelete("{isbn}")]
-
     public void Borrar(string isbn)
     {
-        LibrosRepositorio repo = new LibrosRepositorio();
-        repo.Borrar(new Libro(isbn));
+        LibrosRepositorio repositorio = new LibrosRepositorio();
+        repositorio.Borrar(new Libro(isbn));
     }
 
 }

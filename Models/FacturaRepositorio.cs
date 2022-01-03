@@ -41,16 +41,7 @@ public class FacturaRepositorio
 
     public Factura BuscarUna(Factura f)
     {
-        Factura f0 = new Factura(0, "", 0.0m);
-        for (int n = 0; n < lista.Count(); n++)
-        {
-            if (lista[n].Numero == f.Numero)
-            {
-                f0 = lista[n];
-                break;
-            }
-        }
-        return f0;
+        return  BuscarPrimeraConFiltroNumero(f.Numero);
     }
 
     public List<Factura> BuscarTodas()
@@ -71,7 +62,7 @@ public class FacturaRepositorio
         return lista2;
     }
 
-    public Factura BuscarTodasFiltroNumero(int x)
+    public Factura BuscarPrimeraConFiltroNumero(int x)
     {
         foreach (Factura f in lista)
         {
@@ -84,10 +75,16 @@ public class FacturaRepositorio
     }
 
 
-    public void InsertarFactra(Factura f)
+    public int InsertarFactra(Factura f)
     {
-        FacturaRepositorio.lista.Add(f);
-        return;
+        Factura fX = BuscarUna(f);
+        if (fX.Numero==0){
+            FacturaRepositorio.lista.Add(f);
+            return(f.Numero);
+        } else {
+            return -1;
+        }
+        
     }
 
     public void borrarFactura(Factura f)
