@@ -39,18 +39,10 @@ public class FacturasController : ControllerBase
     }
 
     [HttpPost]
-    public string Insertar(Factura factura)
+    public void Insertar(Factura factura)
     {
         FacturaRepositorio repositorio = new FacturaRepositorio();
         int resultado = repositorio.InsertarFactra(factura);
-        if (resultado == -1)
-        {
-            return "no success" + resultado.ToString();
-        }
-        else
-        {
-            return "sucess " + resultado.ToString();
-        }
     }
 
     [HttpPut("{numero:int}")]

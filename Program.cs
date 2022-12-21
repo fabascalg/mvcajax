@@ -24,7 +24,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.UseCors();
+// app.UseCors("http://localhost:4200/");
+
+    app.UseCors(
+        options => options.WithOrigins("http://localhost:55318").AllowAnyMethod().AllowAnyHeader()
+    );
+
+    //app.UseMvc();
 
 app.Run();
 

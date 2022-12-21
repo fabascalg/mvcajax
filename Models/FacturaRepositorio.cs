@@ -34,7 +34,10 @@ public class FacturaRepositorio
             lista.Add(f11);
             lista.Add(f12);
             lista.Add(f7);
-            lista.OrderBy(varName => varName.Numero);
+            lista.OrderBy((o) => o.Numero);
+            List<Factura> ListaFacturasOrdenas = lista.OrderBy(o=>o.Numero).ToList();
+            lista = ListaFacturasOrdenas;
+
         }
 
     }
